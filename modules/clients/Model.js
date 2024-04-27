@@ -1,41 +1,59 @@
 const mongoose = require('mongoose');
+
 const {Schema} = mongoose;
 
 const clientSchema = new Schema({
-    accountNumber: {
-        type: Number,
+    gender: {
+        type: String,
+        required: true,
+    },
+    name: {
+        type: Object,
+        required: true,
+    },
+    location: {
+        type: Object,
+        required: true,
+    },
+    email: {
+        type: String,
         required: true,
         unique: true,
     },
-    lastName: {
+    login: {
+        type: Object,
+        required: true,
+    },
+    dob: {
+        type: Object,
+        required: true,
+    },
+    registered: {
+        type: Object,
+        required: true,
+    },
+    phone: {
         type: String,
         required: true,
     },
-    firstName: {
+    cell: {
         type: String,
         required: true,
     },
-    surName: {
+    id: {
+        type: Object,
+        required: true,
+    },
+    picture: {
+        type: Object,
+        required: true,
+    },
+    nat: {
         type: String,
         required: true,
     },
-    birthDay: {
-        type: String,
-        required: true,
-    },
-    tin: {
-        type: Number,
-        required: true,
-        unique: true,
-    },
-    responsibleFullName: {
-        type: String,
-        required: true,
-    },
-    status: {
-        type: String,
-        required: true,
-    }
+
+
 });
 
 module.exports = clientSchema;
