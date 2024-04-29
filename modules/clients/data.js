@@ -15,7 +15,7 @@ module.exports = {
                 "city": "Courbevoie",
                 "state": "Martinique",
                 "country": "France",
-                "postcode": 18088,
+                    "postcode": 18088,
                 "coordinates": {
                     "latitude": "-19.1691",
                     "longitude": "-58.3586"
