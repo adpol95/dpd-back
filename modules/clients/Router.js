@@ -1,10 +1,10 @@
 const { Router } = require('express');
 const clientsAll = require("./getAllClients");
-const clientsResponsible = require("./getResponsibleClients");
+const filteredClients = require("./getFilteredClients");
 
 const router = Router();
 
 router.get('/', clientsAll);
-router.post('/test', clientsResponsible);
+router.post('/filter', filteredClients);
 
 module.exports = router;
