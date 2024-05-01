@@ -10,21 +10,25 @@ module.exports = async function (req, res) {
         "location.country",
         "email",
         "login.username",
-        "dob.date",
-        "dob.age",
+        "dob",
         "phone",
         "cell",
         "nat"
     ];
     let breaker = false;
-    const firstLetterUp = req.body.title.replace(/\b\w/gi,(el) => el.toUpperCase());
-    const exacDataRes = "gender name location.country dob.date phone cell picture.medium";
+    const firstLetterUp = decodeURIComponent(req.body.title).replace(/\b\w/gi, (el) => el.toUpperCase());
+    const main = decodeURIComponent(req.body.title)
+    const exacDataRes = "gender name location.country email dob phone cell picture.medium";
+    console.log(main)
     for (let i = 0; i < basicKeys.length; i++) {
         if (breaker) break;
         else {
-            if (req.body.title.includes(" ")) {
-                const FIO = req.body.title.split(" ").map(el => el[0].toUpperCase() + el.slice(1));
-                await clientModel.find({"location.country": firstLetterUp}, exacDataRes)
+            if (main.includes(" ") && !main.includes("(")) {
+                const FIO = main.split(" ").map(el => el[0].toUpperCase() + el.slice(1));
+                await clientModel.find({"location.country": firstLetterUp}, exacDataRes, {
+                    skip: 20 * req.body.page,
+                    limit: 21
+                })
                     .exec()
                     .then((resp) => {
                         if (resp.length) {
@@ -39,7 +43,7 @@ module.exports = async function (req, res) {
                         first: FIO[0],
                         last: FIO[1]
                     }
-                }, exacDataRes)
+                }, exacDataRes, {skip: 20 * req.body.page, limit: 21})
                     .exec()
                     .then((resp) => {
                         if (resp.length) {
@@ -54,7 +58,7 @@ module.exports = async function (req, res) {
                         first: FIO[0],
                         last: FIO[1]
                     }
-                }, exacDataRes)
+                }, exacDataRes, {skip: 20 * req.body.page, limit: 21})
                     .exec()
                     .then((resp) => {
                         if (resp.length) {
@@ -69,7 +73,7 @@ module.exports = async function (req, res) {
                         first: FIO[1],
                         last: FIO[0]
                     }
-                }, exacDataRes)
+                }, exacDataRes, {skip: 20 * req.body.page, limit: 21})
                     .exec()
                     .then((resp) => {
                         if (resp.length) {
@@ -84,7 +88,7 @@ module.exports = async function (req, res) {
                         first: FIO[1],
                         last: FIO[0]
                     }
-                }, exacDataRes)
+                }, exacDataRes, {skip: 20 * req.body.page, limit: 21})
                     .exec()
                     .then((resp) => {
                         if (resp.length) {
@@ -96,7 +100,10 @@ module.exports = async function (req, res) {
                     })
                     .catch((err) => res.status(400).json(err))
             } else {
-                await clientModel.find({[basicKeys[i]]: i === 3 ? firstLetterUp : req.body.title}, exacDataRes)
+                await clientModel.find({[basicKeys[i]]: i === 3 ? firstLetterUp : main}, exacDataRes, {
+                    skip: 21 * req.body.page,
+                    limit: 21
+                })
                     .exec()
                     .then((resp) => {
                         if (resp.length) {

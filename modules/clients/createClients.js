@@ -15,7 +15,7 @@ module.exports = async function () {
                 location: el.location,
                 email: el.email,
                 login: el.login,
-                dob: el.dob,
+                dob: el.dob.date.slice(0, el.dob.date.indexOf("T")),
                 registered: el.registered,
                 phone: el.phone,
                 cell: el.cell,
